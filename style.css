@@ -374,6 +374,14 @@ main, footer {
   }
 }
 
+/* ---------- project theme overrides ---------- */
+.card-purple,
+.doc-purple {
+  --accent: #BB86FC;                       /* legible purple on black */
+  --accent-soft: rgba(187, 134, 252, 0.24);
+  --accent-glow: rgba(187, 134, 252, 0.7);
+}
+
 /* ---------- footer ---------- */
 footer {
   padding: 60px clamp(24px, 5vw, 64px) 80px;

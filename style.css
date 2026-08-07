@@ -10,8 +10,9 @@
   --accent: #00AEFF;       /* cyber blue */
   --accent-soft: rgba(0, 174, 255, 0.24);
   --accent-glow: rgba(0, 174, 255, 0.7);
+  --accent-border: rgba(0, 174, 255, 0.4);
 
-  --font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 
   --container: 1080px;
@@ -89,6 +90,7 @@ a { color: inherit; text-decoration: none; }
 .site-header nav a {
   margin-left: 28px;
   color: #ffffff;
+  text-transform: uppercase;
   transition: color 0.25s ease;
 }
 
@@ -97,12 +99,13 @@ a { color: inherit; text-decoration: none; }
 /* ---------- hero ---------- */
 .hero {
   position: relative;
-  min-height: 62vh;
+  min-height: 36vh;
   display: flex;
-  align-items: flex-start;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
   text-align: center;
-  padding: 130px 24px 0;
+  padding: 110px 24px 0;
   overflow: hidden;
 }
 
@@ -121,6 +124,14 @@ a { color: inherit; text-decoration: none; }
   transform: translateY(0);
 }
 
+.hero-subtitle {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  color: var(--fg-dim);
+  margin: 18px 0 0;
+}
+
 /* ---------- sections ---------- */
 main, footer {
   position: relative;
@@ -134,6 +145,7 @@ main, footer {
   font-family: var(--font-mono);
   font-size: 12px;
   letter-spacing: 0.1em;
+  text-transform: uppercase;
   color: #ffffff;
   margin: 0 0 28px;
 }
@@ -146,7 +158,28 @@ main, footer {
   color: #ffffff;
 }
 
-.work { padding: 24px 0 100px; }
+.about {
+  --accent: #BB86FC;
+  --accent-soft: rgba(187, 134, 252, 0.24);
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 8px 0 28px;
+  text-align: center;
+}
+
+.about-lead {
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--fg-dim);
+  margin: 0;
+}
+
+.about-highlight {
+  color: #4ADE80;
+  font-weight: 600;
+}
+
+.work { padding: 8px 0 100px; }
 
 /* ---------- grid ---------- */
 .grid {
@@ -191,6 +224,7 @@ main, footer {
   color: var(--accent);
   margin: 0;
   letter-spacing: 0.02em;
+  text-transform: uppercase;
 }
 
 .card-title {
@@ -212,6 +246,7 @@ main, footer {
   font-size: 11px;
   letter-spacing: 0.06em;
   color: var(--fg-faint);
+  text-transform: uppercase;
 }
 
 /* ---------- project doc page ---------- */
@@ -226,16 +261,12 @@ main, footer {
   align-items: center;
   gap: 8px;
   font-family: var(--font-mono);
-  font-size: 14px;
+  font-size: 13px;
   color: var(--fg-dim);
-  letter-spacing: 0.04em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   margin-bottom: 40px;
   transition: color 0.25s ease;
-}
-
-.doc-back-arrow {
-  font-size: 22px;
-  line-height: 1;
 }
 
 .doc-back:hover { color: var(--accent); }
@@ -244,6 +275,7 @@ main, footer {
   font-family: var(--font-mono);
   font-size: 12px;
   letter-spacing: 0.1em;
+  text-transform: uppercase;
   color: var(--accent);
   margin: 0 0 14px;
 }
@@ -262,8 +294,10 @@ main, footer {
   gap: 8px;
   font-family: var(--font-mono);
   font-size: 13px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   color: var(--accent);
-  border: 1px solid rgba(0, 174, 255, 0.4);
+  border: 1px solid var(--accent-border);
   border-radius: 8px;
   padding: 8px 14px;
   margin-bottom: 44px;
@@ -380,6 +414,7 @@ main, footer {
   --accent: #BB86FC;                       /* legible purple on black */
   --accent-soft: rgba(187, 134, 252, 0.24);
   --accent-glow: rgba(187, 134, 252, 0.7);
+  --accent-border: rgba(187, 134, 252, 0.4);
 }
 
 /* ---------- footer ---------- */

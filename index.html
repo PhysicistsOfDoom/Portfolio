@@ -8,7 +8,7 @@
 <link rel="icon" href="assets/alephstar_preview.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -19,6 +19,7 @@
 <header class="site-header">
   <a href="index.html" class="mark"><img src="assets/alephstar_preview.png" alt="ALEPHSTAR" class="mark-logo"></a>
   <nav>
+    <a href="#about">About</a>
     <a href="#work">Work</a>
     <a href="#contact">Contact</a>
   </nav>
@@ -34,9 +35,24 @@
       <tspan x="920" font-weight="200">H</tspan>
     </text>
   </svg>
+  <p class="hero-subtitle">Corbin Beus</p>
 </section>
 
 <main>
+  <section class="about" id="about">
+    <p class="section-label section-title">About</p>
+
+    <p class="about-lead">
+      I'm a DevOps Infrastructure Engineer at FLEX. I hold a
+      <span class="about-highlight">Bachelor's in Computer Science</span> and am completing a
+      <span class="about-highlight">Master's in Computer Science</span> at Georgia Tech. I automate
+      the provisioning of servers from bare metal with Xen Orchestra all the way up to deployed
+      RKE2 clusters running FLEX's application microservices. I specialize in Terraform, Kubernetes,
+      and Python, and I focus heavily on building internal platforms with frameworks like C# .NET
+      and FastAPI for easier, self-service user interfaces.
+    </p>
+  </section>
+
   <section class="work" id="work">
     <p class="section-label section-title">Projects</p>
 

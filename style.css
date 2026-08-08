@@ -196,7 +196,7 @@ main, footer {
   max-width: 420px;
   padding: 28px 26px;
   background: var(--bg-elevated);
-  border: 1px solid rgba(255, 255, 255, 0.32);
+  border: 1px solid #ffffff;
   border-radius: 10px;
   opacity: 0;
   transform: translateY(18px);
@@ -210,7 +210,7 @@ main, footer {
 }
 
 .card:hover {
-  border-color: rgba(255, 255, 255, 0.6);
+  border-color: #ffffff;
   background: #060606;
   box-shadow: 0 0 0 1px var(--accent-glow),
               0 0 60px 6px var(--accent-soft),
@@ -420,7 +420,7 @@ main, footer {
 /* ---------- footer ---------- */
 footer {
   padding: 60px clamp(24px, 5vw, 64px) 80px;
-  border-top: 1px solid rgba(255, 255, 255, 0.28);
+  border-top: 1px solid #ffffff;
 }
 
 .socials {

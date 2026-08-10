@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ESP32 + MPU6050 Project — ΛLXPH</title>
+<meta name="description" content="Handling I2C & UART communication with frame creation, CRC checking, Link stats">
+<link rel="icon" href="assets/alephstar_preview.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="scanlines" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<header class="site-header">
+  <a href="index.html" class="mark"><img src="assets/alephstar_preview.png" alt="ALEPHSTAR" class="mark-logo"></a>
+  <nav>
+    <a href="index.html#work">Work</a>
+    <a href="index.html#contact">Contact</a>
+  </nav>
+</header>
+
+<main class="doc doc-red">
+  <a href="index.html" class="doc-back">Back to Home</a>
+
+  <p class="doc-eyebrow">Project #1 &middot; C++/Python &middot; Aug 2026</p>
+  <h1 class="doc-title">ESP32 + MPU6050 Project</h1>
+
+  <a class="doc-repo-link" href="https://github.com/PhysicistsOfDoom/ESP32-MPU6050" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+      <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.535-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+    </svg>
+    View on GitHub
+  </a>
+
+  <p class="doc-lead">
+    An ESP32 samples an MPU6050 IMU over I2C at 100&nbsp;Hz on a dedicated FreeRTOS task,
+    frames each sample with a sync word, sequence number, and CRC&#8209;16, and streams it
+    over UART to a host receiver that re&#8209;syncs on the byte stream, validates every
+    frame, detects dropped and duplicate frames, tracks live link health, and reports
+    final link statistics.
+  </p>
+
+  <section class="doc-section">
+    <h2>Technical Stack</h2>
+    <ul>
+      <li><span>Firmware</span>C++ / FreeRTOS (ESP32, dual-core task split)</li>
+      <li><span>Host receiver</span>Python 3 (pyserial)</li>
+      <li><span>Sensor link</span>I2C &middot; MPU6050 accel/gyro/temp</li>
+      <li><span>Transport</span>UART, 115200 baud</li>
+      <li><span>Framing</span>SYNC &middot; LEN &middot; SEQ &middot; PAYLOAD &middot; CRC&#8209;16 (24 bytes)</li>
+    </ul>
+  </section>
+
+  <section class="doc-section">
+    <h2>What It Proves</h2>
+    <ul>
+      <li><span>Frame integrity</span>Firmware deliberately corrupts 1-in-10 frames on a timer, after the CRC is already computed. The CRC-16 check must catch every one of them with zero false positives on clean frames.</li>
+      <li><span>Loss detection</span>Sequence numbers let the receiver detect dropped and duplicate frames without relying on timestamps.</li>
+      <li><span>Link health</span>A rolling error-rate window drives a live UP / DEGRADED / DOWN link-state readout.</li>
+      <li><span>Timing determinism</span>Sample interval (jitter) is measured against the 10,000&nbsp;&micro;s target using <code>vTaskDelayUntil</code> for drift-free scheduling.</li>
+    </ul>
+  </section>
+
+  <figure class="doc-figure">
+    <img src="assets/esp32-pyserial-output.png" alt="Terminal output of the Python receiver decoding live frames from the ESP32">
+    <figcaption>1. The host receiver locks onto the byte stream and decodes live 100&nbsp;Hz frames straight off the wire.</figcaption>
+  </figure>
+
+  <figure class="doc-figure">
+    <img src="assets/esp32-link-state.png" alt="Terminal showing the link state machine transitioning between UP, DEGRADED, and DOWN">
+    <figcaption>2. The link-state machine flips from UP to DEGRADED the moment the error rate climbs, then recovers.</figcaption>
+  </figure>
+
+  <figure class="doc-figure">
+    <img src="assets/esp32-intentional-degrade.png" alt="Terminal showing CRC failures during a deliberate error-injection window">
+    <figcaption>3. CRC failures appear during a deliberate error-injection window &mdash; exactly the frames the firmware corrupted on purpose.</figcaption>
+  </figure>
+
+  <figure class="doc-figure">
+    <img src="assets/esp32-successful-tests.png" alt="Final link statistics report showing frame counts, CRC failure rate, sequence gaps, and jitter">
+    <figcaption>4. Final statistics: every injected error caught, zero false positives on clean frames, zero missed duplicates.</figcaption>
+  </figure>
+
+  <section class="doc-section">
+    <h2>Run It</h2>
+    <ol>
+      <li>Wire the MPU6050 to the ESP32 (SDA &rarr; GPIO21, SCL &rarr; GPIO22, VCC &rarr; 3V3).</li>
+      <li>Flash the firmware: <code>pio run --target upload</code></li>
+      <li>Install the host dependency: <code>pip install -r requirements.txt</code></li>
+      <li>Run the receiver: <code>python3 link_rx.py /dev/ttyUSB0</code></li>
+      <li>Press Ctrl+C to print the final link statistics report.</li>
+    </ol>
+  </section>
+
+  <section class="doc-section">
+    <h2>Bench Setup</h2>
+    <div class="doc-figure-row">
+      <figure class="doc-figure">
+        <img src="assets/esp32-fullview.png" alt="Full bench setup: ESP32 and MPU6050 on a breadboard wired to a laptop running the link receiver and firmware source">
+      </figure>
+      <figure class="doc-figure">
+        <img src="assets/esp32-closeup.png" alt="Closeup of the MPU6050 breakout board wired to the ESP32 devkit on the breadboard">
+      </figure>
+    </div>
+  </section>
+</main>
+
+<footer id="contact">
+  <p class="section-label">Contact</p>
+  <div class="socials">
+    <a href="https://github.com/PhysicistsOfDoom" target="_blank" rel="noopener" aria-label="GitHub">
+      <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true">
+        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.535-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+      </svg>
+    </a>
+    <a href="https://www.linkedin.com/in/corbin-beus-a32230253/" target="_blank" rel="noopener" aria-label="LinkedIn">
+      <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true">
+        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+      </svg>
+    </a>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

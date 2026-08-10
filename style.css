@@ -236,7 +236,7 @@ main, footer {
 .card-desc {
   font-size: 14px;
   line-height: 1.5;
-  color: var(--fg-dim);
+  color: #ffffff;
   margin: 0;
   flex-grow: 1;
 }
@@ -312,7 +312,7 @@ main, footer {
 .doc-lead {
   font-size: 17px;
   line-height: 1.75;
-  color: var(--fg-dim);
+  color: #ffffff;
   margin: 0 0 44px;
   max-width: 62ch;
 }
@@ -329,6 +329,33 @@ main, footer {
   display: block;
   width: 100%;
   height: auto;
+}
+
+.doc-figure figcaption {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--fg-dim);
+  padding: 14px 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.doc-figure-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin: 0 0 56px;
+}
+
+.doc-figure-row .doc-figure {
+  flex: 1 1 260px;
+  margin: 0;
+  max-width: 320px;
+}
+
+.doc-figure-row .doc-figure img {
+  height: 220px;
+  object-fit: cover;
 }
 
 .doc-section {
@@ -361,7 +388,7 @@ main, footer {
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   font-size: 15px;
   line-height: 1.6;
-  color: var(--fg);
+  color: #ffffff;
 }
 
 .doc-section ul li span {
@@ -380,7 +407,7 @@ main, footer {
   padding: 10px 0 10px 34px;
   font-size: 15px;
   line-height: 1.6;
-  color: var(--fg);
+  color: #ffffff;
 }
 
 .doc-section ol li::before {
@@ -415,6 +442,14 @@ main, footer {
   --accent-soft: rgba(187, 134, 252, 0.24);
   --accent-glow: rgba(187, 134, 252, 0.7);
   --accent-border: rgba(187, 134, 252, 0.4);
+}
+
+.card-red,
+.doc-red {
+  --accent: #FF4D4D;                       /* high-contrast red on black */
+  --accent-soft: rgba(255, 77, 77, 0.24);
+  --accent-glow: rgba(255, 77, 77, 0.7);
+  --accent-border: rgba(255, 77, 77, 0.4);
 }
 
 /* ---------- footer ---------- */

@@ -27,7 +27,7 @@
 <main class="doc">
   <a href="index.html" class="doc-back">Back to Home</a>
 
-  <p class="doc-eyebrow">Project #3 &middot; OpenGL/C++ &middot; Jan 2026</p>
+  <p class="doc-eyebrow">Project #3 &middot; OpenGL/C++/Linux &middot; Aug 2026</p>
   <h1 class="doc-title">OpenGL 3D Roaming Gravity Simulation ++</h1>
 
   <a class="doc-repo-link" href="https://github.com/PhysicistsOfDoom/PhysicsEngine" target="_blank" rel="noopener">
@@ -41,20 +41,23 @@
     The goal is to simulate gravity, bouncing, inertia, and all sorts of natural
     world&#8209;like behavior on objects. Materials will eventually be affected based
     on what texture they have &mdash; ice will glide, metal will be heavy, water
-    mechanics come later on.
+    mechanics come later on. Originally built against Visual Studio and Windows-only
+    prebuilt libraries, the project has since been rebuilt from the ground up as a
+    native Linux application on a CMake build system.
   </p>
 
   <figure class="doc-figure">
-    <img src="assets/physics-engine-screenshot.png" alt="Red cube resting on a green plane under a blue sky, rendered in the OpenGL simulation window">
+    <img src="assets/physics-engine-screenshot.png" alt="Red cube resting on a green plane under a blue sky, rendered in the OpenGL simulation window running natively on Linux">
   </figure>
 
   <section class="doc-section">
     <h2>Technical Stack</h2>
     <ul>
-      <li><span>Language</span>C++</li>
-      <li><span>Graphics API</span>OpenGL 4.5+</li>
+      <li><span>Language</span>C++20</li>
+      <li><span>Graphics API</span>OpenGL 3.3+ (core profile)</li>
       <li><span>Windowing / Input</span>GLFW &middot; GLAD &middot; GLM</li>
-      <li><span>Tools</span>Visual Studio &middot; CMake</li>
+      <li><span>Build System</span>CMake</li>
+      <li><span>Platform</span>Linux</li>
     </ul>
   </section>
 
@@ -66,13 +69,22 @@
   </section>
 
   <section class="doc-section">
-    <h2>Download</h2>
+    <h2>Build &amp; Run</h2>
     <ol>
       <li>Clone the repo.</li>
-      <li>Open in Visual Studio.</li>
-      <li>Ensure CMake is installed.</li>
-      <li>Build solution (x64 Release).</li>
+      <li>Install build dependencies: <code>cmake</code>, <code>pkg-config</code>, <code>libglfw3-dev</code>, <code>libgl1-mesa-dev</code>, and the X11 dev libraries (<code>libx11-dev</code>, <code>libxrandr-dev</code>, <code>libxi-dev</code>, <code>libxinerama-dev</code>, <code>libxcursor-dev</code>) &mdash; GLAD and GLM ship vendored in the repo, no separate install needed.</li>
+      <li>Run <code>cmake -B build -DCMAKE_BUILD_TYPE=Release &amp;&amp; cmake --build build -j</code> from the repo root.</li>
+      <li>Launch the built binary: <code>./build/physicsEngine</code>.</li>
     </ol>
+  </section>
+
+  <section class="doc-section">
+    <h2>Controls</h2>
+    <ul>
+      <li><span>W / A / S / D</span>Move forward / left / back / right</li>
+      <li><span>Mouse</span>Look around (cursor locked to window)</li>
+      <li><span>Space</span>Jump (only while grounded)</li>
+    </ul>
   </section>
 </main>
 
